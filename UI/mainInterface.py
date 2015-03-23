@@ -9,24 +9,25 @@ import sys
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
-class ScrollWindow(QtGui.QWidget):
+class ScrollWindow(QWidget):
     def __init__(self, parent=None):
-        QtGui.QWidget.__init__(self, parent)
-        self.scene = QtGui.QGraphicsScene()
-        self.view = QtGui.QGraphicsView(self.scene)
-        layout = QtGui.QVBoxLayout()
+        QWidget.__init__(self, parent)
+        self.scene = QGraphicsScene()
+        self.view = QGraphicsView(self.scene)
+        layout = QVBoxLayout()
         layout.addWidget(self.view)
         self.setLayout(layout)
-        self.pixmap_item = QtGui.QGraphicsPixmapItem(QtGui.QPixmap('charmander.png'), None, self.scene)
-        self.pixmap_item.mousePressEvent = self.pixelSelect
-        self.click_positions = []
+        self.pixmap_item = QPainter()
+        #self.pixmap_item.mousePressEvent = self.pixelSelect
+        #self.click_positions = []
+        self.pixmap_item.drawLine(2, 2, 10, 10)
 
     def pixelSelect(self, event):
         self.click_positions.append(event.pos())
         if len(self.click_positions) < 4:
             return
-        pen = QtGui.QPen(QtCore.Qt.red)
-        self.scene.addPolygon(QtGui.QPolygonF(self.click_positions), pen)
+        pen = QPen(QtCore.Qt.red)
+        self.scene.addPolygon(QPolygonF(self.click_positions), pen)
         for point in self.click_positions:
             self.scene.addEllipse(point.x(), point.y(), 2, 2, pen)
         self.click_positions = []
@@ -45,11 +46,12 @@ class FormWidget(QWidget):
         super(FormWidget, self).__init__(parent)
         self.layout = QVBoxLayout(self)
 
-        self.button1 = QPushButton("Button 1")
-        self.layout.addWidget(self.button1)
+        self.scrollwindow1 = QPainter()
+        self.scrollwindow1.drawLine(2, 2, 10, 10)
+        self.layout.addWidget(self.scrollwindow1)
 
-        self.button2 = QPushButton("Button 2")
-        self.layout.addWidget(self.button2)
+        self.scrollwindow2 = ScrollWindow()
+        self.layout.addWidget(self.scrollwindow2)
 
         self.scrollbar = QScrollBar(1)
         self.layout.addWidget(self.scrollbar)
