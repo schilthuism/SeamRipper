@@ -1,0 +1,3 @@
+#!/bin/bash
+
+gcc ./SimpleXApp.c -lX11 -o ./SimpleXApp && ./SimpleXApp
